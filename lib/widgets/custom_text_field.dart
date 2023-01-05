@@ -5,20 +5,38 @@ class CustomTextField extends StatefulWidget {
     Key? key,
     required this.labelText,
     this.onFieldSubmitted,
+    this.onChanged,
     this.validator,
     this.controller,
     this.prefixIcon,
-    required this.formFieldKey,
+    this.formFieldKey,
     this.isReadOnly = false,
     this.keyboardType,
   }) : super(key: key);
 
+  /// Text for the text field and also hint
   final String labelText;
+
+  /// Action when the field is submitted from keyboard action
   final void Function(String)? onFieldSubmitted;
+
+  /// Action executed everytime user type on text field
+  final void Function(String)? onChanged;
+
+  /// Validation function for the text field
+  /// Return String for the error message
+  /// and return null if validation is valid
   final String? Function(String?)? validator;
+
+  /// Controls the text being edited
   final TextEditingController? controller;
+
+  /// Prefix icon
   final Widget? prefixIcon;
-  final GlobalKey<FormFieldState> formFieldKey;
+
+  /// Field key that will be used for validation
+  final GlobalKey<FormFieldState>? formFieldKey;
+
   final bool isReadOnly;
   final TextInputType? keyboardType;
 
@@ -68,6 +86,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
           onFieldSubmitted: widget.onFieldSubmitted,
+          onChanged: widget.onChanged,
           validator: (value) {
             if (widget.validator != null) {
               final errorMessage = widget.validator!(value);

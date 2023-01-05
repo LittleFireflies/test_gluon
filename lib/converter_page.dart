@@ -6,7 +6,6 @@ class ConverterPage extends StatelessWidget {
   final String username;
 
   final _inputFieldKey = GlobalKey<FormFieldState>();
-  final _outputFieldKey = GlobalKey<FormFieldState>();
   final _inputController = TextEditingController();
   final _outputController = TextEditingController();
 
@@ -41,11 +40,22 @@ class ConverterPage extends StatelessWidget {
                         decimal: true,
                         signed: true,
                       ),
+                      onChanged: (value) {
+                        _inputFieldKey.currentState?.validate();
+                      },
+                      validator: (value) {
+                        if (value != null) {
+                          if (value.length > 15) {
+                            return 'Max. 15 digits';
+                          }
+                        }
+
+                        return null;
+                      },
                     ),
                     const SizedBox(height: 48),
                     CustomTextField(
                       labelText: 'Output',
-                      formFieldKey: _outputFieldKey,
                       controller: _outputController,
                       isReadOnly: true,
                     ),
@@ -55,9 +65,11 @@ class ConverterPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                int inputNumber = int.tryParse(_inputController.text) ?? 0;
-                final output = NumberToWordsConverter.convert(inputNumber);
-                _outputController.text = output;
+                if (_inputFieldKey.currentState?.validate() ?? false) {
+                  int inputNumber = int.tryParse(_inputController.text) ?? 0;
+                  final output = NumberToWordsConverter.convert(inputNumber);
+                  _outputController.text = output;
+                }
               },
               child: const Text('Convert'),
             ),
