@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
           children: [
             CustomTextField(
               formFieldKey: _usernameFieldKey,
-              hintText: 'Username',
+              labelText: 'Username',
               prefixIcon: const Icon(Icons.person),
               controller: _usernameController,
               onFieldSubmitted: (value) {
