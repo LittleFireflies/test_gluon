@@ -39,15 +39,17 @@ class NumberToWordsConverter {
 
     String thousandsString;
     thousandsString = _convertLessThanOneThousand(thousands);
+    result = result + thousandsString;
 
-    return result + thousandsString;
+    // remove extra spaces
+    return result.replaceAll(RegExp('\\s+'), " ").trim();
   }
 
   static String _getTrillions(int trillions) {
     if (trillions == 0) {
       return '';
     } else {
-      return '${_convertLessThanOneThousand(trillions)} $trillion';
+      return '${_convertLessThanOneThousand(trillions)} $trillion ';
     }
   }
 
@@ -55,7 +57,7 @@ class NumberToWordsConverter {
     if (billions == 0) {
       return '';
     } else {
-      return '${_convertLessThanOneThousand(billions)} $billion';
+      return '${_convertLessThanOneThousand(billions)} $billion ';
     }
   }
 
@@ -63,7 +65,7 @@ class NumberToWordsConverter {
     if (millions == 0) {
       return '';
     } else {
-      return '${_convertLessThanOneThousand(millions)} $million';
+      return '${_convertLessThanOneThousand(millions)} $million ';
     }
   }
 
@@ -93,6 +95,6 @@ class NumberToWordsConverter {
       return soFar;
     }
 
-    return '${numNames[number]} $hundred $soFar';
+    return '${numNames[number]} $hundred$soFar';
   }
 }

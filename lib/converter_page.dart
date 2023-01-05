@@ -7,6 +7,7 @@ class ConverterPage extends StatelessWidget {
 
   final _inputFieldKey = GlobalKey<FormFieldState>();
   final _outputFieldKey = GlobalKey<FormFieldState>();
+  final _inputController = TextEditingController();
   final _outputController = TextEditingController();
 
   ConverterPage({Key? key, required this.username}) : super(key: key);
@@ -22,30 +23,40 @@ class ConverterPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Hello, $username'),
-            const SizedBox(height: 16),
-            const Text(
-                'Please enter an integer number in the "Input" box and tap on "Convert" to see the equivalent in words appear in the "Output" box'),
-            const SizedBox(height: 16),
-            CustomTextField(
-              labelText: 'Input',
-              formFieldKey: _inputFieldKey,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-                signed: true,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('Hello, $username'),
+                    const SizedBox(height: 16),
+                    const Text(
+                        'Please enter an integer number in the "Input" box and tap on "Convert" to see the equivalent in words appear in the "Output" box'),
+                    const SizedBox(height: 16),
+                    CustomTextField(
+                      labelText: 'Input',
+                      formFieldKey: _inputFieldKey,
+                      controller: _inputController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                        signed: true,
+                      ),
+                    ),
+                    const SizedBox(height: 48),
+                    CustomTextField(
+                      labelText: 'Output',
+                      formFieldKey: _outputFieldKey,
+                      controller: _outputController,
+                      isReadOnly: true,
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 48),
-            CustomTextField(
-              labelText: 'Output',
-              formFieldKey: _outputFieldKey,
-              controller: _outputController,
-              isReadOnly: true,
-            ),
-            const Spacer(),
             ElevatedButton(
               onPressed: () {
-                final output = NumberToWordsConverter.convert(999999999999999);
+                int inputNumber = int.tryParse(_inputController.text) ?? 0;
+                final output = NumberToWordsConverter.convert(inputNumber);
                 _outputController.text = output;
               },
               child: const Text('Convert'),
