@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_gluon/utils/number_to_words_converter.dart';
 import 'package:test_gluon/widgets/custom_text_field.dart';
 
 class ConverterPage extends StatelessWidget {
@@ -6,6 +7,7 @@ class ConverterPage extends StatelessWidget {
 
   final _inputFieldKey = GlobalKey<FormFieldState>();
   final _outputFieldKey = GlobalKey<FormFieldState>();
+  final _outputController = TextEditingController();
 
   ConverterPage({Key? key, required this.username}) : super(key: key);
 
@@ -37,7 +39,16 @@ class ConverterPage extends StatelessWidget {
             CustomTextField(
               labelText: 'Output',
               formFieldKey: _outputFieldKey,
+              controller: _outputController,
               isReadOnly: true,
+            ),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                final output = NumberToWordsConverter.convert(999999999999999);
+                _outputController.text = output;
+              },
+              child: const Text('Convert'),
             ),
           ],
         ),

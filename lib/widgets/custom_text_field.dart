@@ -41,6 +41,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           controller: widget.controller,
           readOnly: widget.isReadOnly,
           keyboardType: widget.keyboardType,
+          maxLines: null,
           decoration: InputDecoration(
             prefixIcon: widget.prefixIcon,
             suffixIcon: _errorMessage != null
