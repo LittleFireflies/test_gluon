@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test_gluon/keys.dart';
 import 'package:test_gluon/utils/number_to_words_converter.dart';
 import 'package:test_gluon/widgets/custom_text_field.dart';
 
@@ -33,6 +34,7 @@ class ConverterPage extends StatelessWidget {
                         'Please enter an integer number in the "Input" box and tap on "Convert" to see the equivalent in words appear in the "Output" box'),
                     const SizedBox(height: 16),
                     CustomTextField(
+                      key: ConverterPageKeys.inputField,
                       labelText: 'Input',
                       formFieldKey: _inputFieldKey,
                       controller: _inputController,
@@ -55,6 +57,7 @@ class ConverterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 48),
                     CustomTextField(
+                      key: ConverterPageKeys.outputField,
                       labelText: 'Output',
                       controller: _outputController,
                       isReadOnly: true,
@@ -64,6 +67,7 @@ class ConverterPage extends StatelessWidget {
               ),
             ),
             ElevatedButton(
+              key: ConverterPageKeys.convertButton,
               onPressed: () {
                 if (_inputFieldKey.currentState?.validate() ?? false) {
                   int inputNumber = int.tryParse(_inputController.text) ?? 0;
